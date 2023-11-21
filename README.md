@@ -24,3 +24,10 @@ The following guides illustrate how to use some features concretely:
 - Created Custom IAM module for specific role which is used in ECS service
 - created ALB for ECS service
 - created ECS module with cluster, task definition, service , and asg configuration.
+
+FYI: we use custom VPC, and we created public and privat subnets. ECS cluster we will deploy it onto private subnets for security purposes. 
+- and specifically in this project we deploy ALB onto Public subnet.
+- I used NAT Gateway for internet connectivity.
+
+- FYI: we need to create ECR customly and push docker image onto ECS. and update variable in terraform root (test directory) in variables.tf file one variable called container_definitions in this we need to add the URL of ECR image.
+- because we don't used CI/CD pipeline so we have created customly.
