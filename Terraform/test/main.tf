@@ -46,6 +46,8 @@ module "iam" {
   source = "../modules/IAM"
 }
 
+# Please create ECR customly and push docker image onto ECR and use URL of image in variables.tf file (container_definitions varialbe)
+
 module "ecs" {
   source       = "../modules/ecs"
   cluster_name = "TerraTest"
