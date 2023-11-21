@@ -95,7 +95,7 @@ module "ecs" {
   svc_desired_count = 1
 
   svc_assign_public_ip = true
-  svc_subnets = [module.vpc.private_subnet_id_1, module.vpc.private_subnet_id_2]
+  svc_subnets          = [module.vpc.private_subnet_id_1, module.vpc.private_subnet_id_2]
 
   # ECS - Service - ALB
   svc_lb_target_group_arn = module.alb.alb_target_group
