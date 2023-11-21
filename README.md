@@ -27,7 +27,15 @@ The following guides illustrate how to use some features concretely:
 
 FYI: we use custom VPC, and we created public and privat subnets. ECS cluster we will deploy it onto private subnets for security purposes. 
 - and specifically in this project we deploy ALB onto Public subnet.
-- I used NAT Gateway for internet connectivity.
+- I used NAT Gateway for internet connectivity into the Private subnet.
 
-- FYI: we need to create ECR customly and push docker image onto ECS. and update variable in terraform root (test directory) in variables.tf file one variable called container_definitions in this we need to add the URL of ECR image.
+- FYI: we need to create ECR customly and push docker image onto ECS. and update variable in terraform root (test directory) in variables.tf file, one variable called container_definitions in this we need to add the URL of ECR image.
 - because we don't used CI/CD pipeline so we have created customly.
+
+# Terraform run
+
+- goto test directory
+- terraform init
+- terraform validate
+- terraform plan
+- terraform apply
