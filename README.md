@@ -20,6 +20,8 @@ The following guides illustrate how to use some features concretely:
 
 # Terraform 
 
+FYI: I used aws cli for access and secret key configure.
+
 - Created Custom VPC module
 - Created Custom IAM module for specific role which is used in ECS service
 - created ALB for ECS service
@@ -39,3 +41,4 @@ FYI: we use custom VPC, and we created public and privat subnets. ECS cluster we
 - terraform validate
 - terraform plan
 - terraform apply
+
