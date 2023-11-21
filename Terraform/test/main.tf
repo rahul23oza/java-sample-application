@@ -41,3 +41,63 @@ module "alb" {
   }
 
 }
+
+module "iam" {
+  source = "../modules/IAM"
+}
+
+module "ecs" {
+  source       = "../modules/ecs"
+  cluster_name = "TerraTest"
+
+  #ECS-SG
+
+  sg_name        = "ecs-SG"
+  sg_description = "this is for ecs security group for test server."
+  sg_tag_name    = "ECS-SG"
+  vpc_id         = module.vpc.vpc_id
+
+  ingress_rules = {
+    custom_tcp = {
+      from_port   = 8080
+      to_port     = 8080
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+      description = ""
+    }
+  }
+
+  egress_rules = {
+    all_traffic = {
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1" # All protocols
+      cidr_blocks = ["0.0.0.0/0"]
+      description = ""
+    }
+  }
+
+  # ECS - TD
+
+  td_family                     = "demo-fargate-task"
+  td_requires_compatibilities   = ["FARGATE"]
+  td_network_mode               = "awsvpc"
+  td_cpu                        = "256" # 1 vCPU (1024 CPU units)
+  td_memory                     = "512" # 1 GiB RAM (1024 MiB)
+  td_execution_role_arn         = module.iam.iam_ecs_task_execution_role
+  td_container_definitions_json = jsonencode([var.container_definitions])
+
+  # ECS - Service
+  svc_name          = "App_service"
+  svc_launch_type   = "FARGATE"
+  svc_desired_count = 1
+
+  svc_assign_public_ip = true
+  svc_subnets = [module.vpc.private_subnet_id_1, module.vpc.private_subnet_id_2]
+
+  # ECS - Service - ALB
+  svc_lb_target_group_arn = module.alb.alb_target_group
+  svc_lb_container_name   = var.container_definitions.name
+  svc_lb_container_port   = var.container_definitions.portMappings[0].containerPort
+
+}
