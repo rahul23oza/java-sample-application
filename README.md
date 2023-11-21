@@ -21,3 +21,6 @@ The following guides illustrate how to use some features concretely:
 # Terraform 
 
 - Created Custom VPC module
+- Created Custom IAM module for specific role which is used in ECS service
+- created ALB for ECS service
+- created ECS module with cluster, task definition, service , and asg configuration.
